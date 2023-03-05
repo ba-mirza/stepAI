@@ -1,0 +1,80 @@
+<div class="main">
+  <mat-form-field appearance="outline">
+    <input matInput (keyup)="applyFilter($event)" placeholder="search" #input>
+  </mat-form-field>
+
+  <div>
+    <h1 style="margin-top: 1rem">
+      Товары на складе
+    </h1>
+  </div>
+
+  <div class="fixedTable">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="brand">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="th-flex">
+            <span>Бренд</span> <i class="fi fi-rr-search"></i>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.brand}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="vendor_code">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="th-flex">
+            <span>Артикул</span>  <i class="fi fi-rr-search"></i>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.vendor_code}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="th-flex">
+            <span>Наименование товара</span>
+            <i class="fi fi-rr-search"></i>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.product_title}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="th-flex">
+            <span>Цена</span> <i class="fi fi-rr-search"></i>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="isHave">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="th-flex">
+          <span>
+            Наличие
+          </span>
+            <i class="fi fi-rr-filter"></i>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <p style="cursor: pointer" [matMenuTriggerFor]="menu" [class.checked]="element.isHave">{{element.isHave ? "В наличии" : "Нет в наличии"}}</p>
+          <mat-menu #menu="matMenu">
+            <mat-slide-toggle [(ngModel)]="element.isHave">В наличии</mat-slide-toggle>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="5">
+          <p style="text-align: center">
+            Нет данных, соответствующих фильтру
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
